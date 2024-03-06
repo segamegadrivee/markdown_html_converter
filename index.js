@@ -1,30 +1,42 @@
 const fs = require('fs');
 
-// Зчитуємо вміст з файлу .md
+// Read the content from the .md file
 const markdownText = fs.readFileSync('input.md', 'utf8');
 
-// Функція для перетворення Markdown на HTML
+// Function to convert Markdown to HTML
 function convertMarkdownToHtml(markdownText) {
 
-    // Замінюємо жирний текст
+    // Replace bold text
     markdownText = markdownText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-    // Замінюємо курсив
+    // Replace italic
     markdownText = markdownText.replace(/\_\s?([^\n]+)\_/g, '<i>$1</i>');
-    // Замінюємо преформатований текст
+    // Replace preformatted text
     markdownText = markdownText.replace(/```([^`]+)```/g, '<pre>$1</pre>');
-    // Замінюємо моноширинний шрифт
+    // Replace monospace font
     markdownText = markdownText.replace(/`([^`]+)`/g, '<tt>$1</tt>');
-    // Замінюємо параграфи
+    // Replace paragraphs
     markdownText = markdownText.replace(/([^\n]+\n?)/g, '\n<p>$1</p>\n');
 
-    return markdownText;
+    // Check for unclosed tags
+    const unclosedTags = markdownText.match(/(_[^_]+|(\*\*[^*]+)|(`[^`]+`)|(```[^`]+```)|(`[^`]+))/g);
+    if (unclosedTags) {
+        console.error('Unclosed Markdown tags found:');
+        // unclosedTags.forEach((tag) => {
+        //     console.error(tag);  
+        // });
+        return null; // Do not proceed with HTML generation
+    }
 
+    return markdownText;
 }
 
-// Перетворюємо Markdown на HTML
+// Convert Markdown to HTML
 const html = convertMarkdownToHtml(markdownText);
 
-// Записуємо результат у вихідний файл .html
-fs.writeFileSync('output.html', html, 'utf8');
-
-console.log('Markdown успішно перетворено на HTML і збережено у файлі output.html');
+if (html !== null) {
+    // Write the result to the output.html file
+    fs.writeFileSync('output.html', html, 'utf8');
+    console.log('Markdown successfully converted to HTML and saved in the output.html file.');
+} else {
+    console.error('Error: Unclosed Markdown tags detected. HTML generation aborted.');
+}
