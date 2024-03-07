@@ -17,14 +17,6 @@ function convertMarkdownToHtml(markdownText) {
     // Replace paragraphs
     markdownText = markdownText.replace(/([^\n]+\n?)/g, '\n<p>$1</p>\n');
 
-    // Replace links
-    markdownText = markdownText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-    // Replace list
-    markdownText = markdownText.replace(/^\s*-\s+(.*)$/gm, '<li>$1</li>');
-    markdownText = <ul>${markdownText}</ul>;
-
-
-
     // Check for unclosed tags
     const unclosedTags = markdownText.match(/(_[^_]+|(\*\*[^*]+)|(`[^`]+`)|(```[^`]+```)|(`[^`]+))/g);
     if (unclosedTags) {
