@@ -30,13 +30,61 @@ function convertMarkdownToHtml(markdownText) {
     return markdownText;
 }
 
+// Function to convert Markdown to ANSI
+function convertMarkdownToAnsi(markdownText) {
+    // Replace bold text with ANSI escape codes for bold
+    markdownText = markdownText.replace(/\*\*(.*?)\*\*/g, '\x1b[1m$1\x1b[0m');
+
+    // Replace italic text with ANSI escape codes for italic
+    markdownText = markdownText.replace(/\_\s?([^\n]+)\_/g, '\x1b[3m$1\x1b[0m');
+
+    // Replace preformatted text with ANSI escape codes for reverse (inverted colors)
+    markdownText = markdownText.replace(/```([^`]+)```/g, '\x1b[7m$1\x1b[0m');
+
+    // Replace monospace font with ANSI escape codes for reverse (inverted colors)
+    markdownText = markdownText.replace(/`([^`]+)`/g, '\x1b[7m$1\x1b[0m');
+
+    // Return the converted text
+    return markdownText;
+}
+
 // Convert Markdown to HTML
 const html = convertMarkdownToHtml(markdownText);
 
+// Convert Markdown to ANSI
+const ansiText = convertMarkdownToAnsi(markdownText);
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const formatIndex = args.indexOf('--format');
+let outputFormat = 'ansi'; // Default output format
+
+if (formatIndex !== -1 && args.length > formatIndex + 1) {
+    outputFormat = args[formatIndex + 1];
+}
+
+// Function to format text for ANSI output
+function formatForAnsi(text) {
+    return `\x1b[7m${text}\x1b[0m`; // Inverted colors
+}
+
 if (html !== null) {
-    // Write the result to the output.html file
-    fs.writeFileSync('output.html', html, 'utf8');
-    console.log('Markdown successfully converted to HTML and saved in the output.html file.');
+    if (outputFormat === 'ansi') {
+        // Output formatted text to console using ANSI escape codes
+        console.log(formatForAnsi(ansiText));
+    } else {
+        // Write the result to the output.html file
+        fs.writeFileSync('output.html', html, 'utf8');
+        console.log('Markdown successfully converted to HTML and saved in the output.html file.');
+    }
 } else {
     console.error('Error: Unclosed Markdown tags detected. HTML generation aborted.');
 }
+
+
+
+module.exports = {
+    convertMarkdownToHtml,
+    convertMarkdownToAnsi,
+    formatForAnsi
+};
