@@ -6,20 +6,20 @@ const {
     formatForAnsi
 } = require('../index'); // Assuming your code is in another file named yourMarkdownConverter.js
 
-// describe('Markdown to HTML Conversion', function () {
-//     it('should convert Markdown to HTML correctly', function () {
-//         const markdownText = '**bold** _italic_ ```code``` `monospace`';
-//         const expectedHtml = '<b>bold</b> <i>italic</i> <pre>code</pre> <tt>monospace</tt>';
-//         const html = convertMarkdownToHtml(markdownText);
-//         assert.strictEqual(html, expectedHtml);
-//     });
+describe('Markdown to HTML Conversion', function () {
+    it('should convert Markdown to HTML correctly', function () {
+        const markdownText = '**bold** _italic_ ```code``` `monospace`';
+        const expectedHtml = '<p><b>bold</b> <i>italic</i> <pre>code</pre> <tt>monospace</tt></p>';
+        const html = convertMarkdownToHtml(markdownText);
+        assert.strictEqual(html, expectedHtml);
+    });
 
-//     it('should return null if unclosed Markdown tags are found', function () {
-//         const markdownText = '**unclosed';
-//         const html = convertMarkdownToHtml(markdownText);
-//         assert.strictEqual(html, null);
-//     });
-// });
+    it('should return null if unclosed Markdown tags are found', function () {
+        const markdownText = '**unclosed';
+        const html = convertMarkdownToHtml(markdownText);
+        assert.strictEqual(html, null);
+    });
+});
 
 describe('Markdown to ANSI Conversion', function () {
     it('should convert Markdown to ANSI correctly', function () {

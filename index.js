@@ -15,7 +15,7 @@ function convertMarkdownToHtml(markdownText) {
     // Replace monospace font
     markdownText = markdownText.replace(/`([^`]+)`/g, '<tt>$1</tt>');
     // Replace paragraphs
-    markdownText = markdownText.replace(/([^\n]+\n?)/g, '\n<p>$1</p>\n');
+    markdownText = markdownText.replace(/([^\n]+\n?)/g, '<p>$1</p>');
 
     // Check for unclosed tags
     const unclosedTags = markdownText.match(/(_[^_]+|(\*\*[^*]+)|(`[^`]+`)|(```[^`]+```)|(`[^`]+))/g);
