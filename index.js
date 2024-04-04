@@ -64,13 +64,19 @@ if (formatIndex !== -1 && args.length > formatIndex + 1) {
 }
 
 // Function to format text for ANSI output
-sole using ANSI escape codes
-console.log(formatForAnsi(ansiText));
-    } else {
-    // Write the result to the output.html file
-    fs.writeFileSync('output.html', html, 'utf8');
-    console.log('Markdown successfully converted to HTML and saved in the output.html file.');
+function formatForAnsi(text) {
+    return `\x1b[7m${text}\x1b[0m`; // Inverted colors
 }
+
+if (html !== null) {
+    if (outputFormat === 'ansi') {
+        // Output formatted text to console using ANSI escape codes
+        console.log(formatForAnsi(ansiText));
+    } else {
+        // Write the result to the output.html file
+        fs.writeFileSync('output.html', html, 'utf8');
+        console.log('Markdown successfully converted to HTML and saved in the output.html file.');
+    }
 } else {
     console.error('Error: Unclosed Markdown tags detected. HTML generation aborted.');
 }
