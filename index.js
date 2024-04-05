@@ -57,7 +57,7 @@ const ansiText = convertMarkdownToAnsi(markdownText);
 // Parse command line arguments
 const args = process.argv.slice(2);
 const formatIndex = args.indexOf('--format');
-let outputFormat = 'ansi'; // Default output format
+let outputFormat = 'html'; // Default output format
 
 if (formatIndex !== -1 && args.length > formatIndex + 1) {
     outputFormat = args[formatIndex + 1];
