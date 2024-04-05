@@ -24,7 +24,7 @@ This Node.js script reads content from a Markdown file (`input.md`), processes i
    - If there are no unclosed tags, the converted HTML is saved in `output.html`.
    - Otherwise, an error message is displayed, and HTML generation is aborted.
 
-   ### Conversion Formats
+ 
 5. **Convert to HTML (default) or ANSI**:
 
    You can convert your text to either HTML or ANSI format using the following commands:
