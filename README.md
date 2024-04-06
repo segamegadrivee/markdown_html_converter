@@ -5,7 +5,7 @@ This Node.js script reads content from a Markdown file (`input.md`), processes i
 
 ## Usage
 
-## Installation
+
 
 1. **Installation**: Ensure you have Node.js installed on your system. After cloning the repository, navigate to the project directory and run the following command to install dependencies:
 
